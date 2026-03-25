@@ -38,6 +38,10 @@ The site is currently optimized around:
   Focus: interactive displays, smart boards, series comparison, use-case mapping
 - `/services`
   Focus: smart classroom setup, networking, surveillance, infrastructure integration
+- `/resources`
+  Focus: informational search traffic, buying guides, planning checklists, support-oriented content
+- `/smart-classroom-solutions-india`
+  Focus: India-specific commercial search intent for smart classroom and integration queries
 - `/about`
   Focus: company credibility, experience, integration background
 - `/clients`
@@ -78,6 +82,8 @@ The site is currently optimized around:
 - Homepage solution-intent section
 - Homepage stats / trust section
 - Homepage FAQ section
+- Resource hub page for informational traffic
+- India-focused landing page for location-specific search intent
 - Stronger homepage metadata
 - Stronger services page H1 and intro copy
 - Improved support page trust signals and metadata
@@ -118,7 +124,7 @@ Examples of the keyword themes this setup is targeting:
 - This is still a client-rendered React SPA, so SEO is improved but not as strong as full SSR / prerendered output would be.
 - Ranking outcomes will depend on production deployment matching the intended domain.
 - If the live production site is still different from this repo, search performance for this implementation will not improve until deployment is aligned.
-- There is no blog, resource hub, or location-specific SEO content yet.
+- There is now a resource hub and an India-focused landing page, but there is still no full blog / article program yet.
 - There is no Search Console / analytics / backlink data in this repo, so this work is based on on-page SEO and information architecture only.
 
 ## Recommended Next SEO Steps
@@ -151,6 +157,8 @@ Last local validation completed successfully with:
 - `src/App.jsx`
 - `src/ProductsPage.jsx`
 - `src/ServicesPage.jsx`
+- `src/ResourcesPage.jsx`
+- `src/IndiaSolutionsPage.jsx`
 - `src/ContactPage.jsx`
 - `src/SupportPage.jsx`
 - `src/AboutPage.jsx`

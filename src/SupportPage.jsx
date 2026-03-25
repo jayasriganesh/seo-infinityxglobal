@@ -50,21 +50,33 @@ const SupportPage = () => {
       title: 'Warranty Policy',
       description: 'Comprehensive coverage and terms for all InfinityX hardware and interactive displays.',
       icon: <Shield className="text-[#FF9F1B]" size={32} />,
-      links: ['Standard Warranty', 'Extended Coverage', 'RMA Status']
+      links: [
+        { label: 'Standard Warranty', to: '/contact' },
+        { label: 'Extended Coverage', to: '/contact' },
+        { label: 'RMA Status', to: '/contact' },
+      ]
     },
     {
       id: 'resources',
       title: 'Resource Center',
       description: 'Access user manuals, technical specifications, and AI-Powered SmartClass software guides.',
       icon: <BookOpen className="text-[#FF9F1B]" size={32} />,
-      links: ['User Manuals', 'Firmware Updates', 'Installation Guides']
+      links: [
+        { label: 'User Manuals', to: '/resources' },
+        { label: 'Firmware Updates', to: '/resources' },
+        { label: 'Installation Guides', to: '/resources' },
+      ]
     },
     {
       id: 'request',
       title: 'Service Request',
       description: 'Need technical assistance? Open a ticket or schedule an on-site inspection.',
       icon: <Wrench className="text-[#FF9F1B]" size={32} />,
-      links: ['Open Ticket', 'Technical FAQ', 'Video Tutorials']
+      links: [
+        { label: 'Open Ticket', to: '/contact' },
+        { label: 'Technical FAQ', to: '/resources' },
+        { label: 'Video Tutorials', to: '/resources' },
+      ]
     }
   ];
 
@@ -109,9 +121,9 @@ const SupportPage = () => {
               </p>
               <div className="space-y-4">
                 {cat.links.map(link => (
-                  <button key={link} className="flex items-center justify-between w-full py-3 border-b border-foreground/5 text-sm font-bold text-foreground/80 hover:text-[#FF9F1B] transition-colors group/link">
-                    {link} <ChevronRight size={16} className="text-foreground/20 group-hover/link:translate-x-1 transition-transform" />
-                  </button>
+                  <Link key={link.label} to={link.to} className="flex items-center justify-between w-full py-3 border-b border-foreground/5 text-sm font-bold text-foreground/80 hover:text-[#FF9F1B] transition-colors group/link">
+                    {link.label} <ChevronRight size={16} className="text-foreground/20 group-hover/link:translate-x-1 transition-transform" />
+                  </Link>
                 ))}
               </div>
             </div>

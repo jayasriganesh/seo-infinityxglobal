@@ -129,6 +129,12 @@ const ServicesPage = () => {
                         >
                             Explore Products <ChevronRight size={18} />
                         </Link>
+                        <Link
+                            to="/smart-classroom-solutions-india"
+                            className="inline-flex items-center justify-center gap-2 rounded-full border border-foreground/15 px-8 py-4 text-base font-bold text-foreground transition-all hover:border-[#FF9F1B] hover:text-[#FF9F1B]"
+                        >
+                            India Solutions Page <ChevronRight size={18} />
+                        </Link>
                     </div>
                 </div>
             </section>

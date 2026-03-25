@@ -7,7 +7,9 @@
   <script>
     (function () {
       var path = window.location.pathname + window.location.search + window.location.hash;
-      var knownBase = path.indexOf('/infinityx-site/') === 0 ? '/infinityx-site' : '';
+      var segments = window.location.pathname.split('/').filter(Boolean);
+      var isGitHubPagesHost = /\.github\.io$/i.test(window.location.hostname);
+      var knownBase = isGitHubPagesHost && segments.length > 0 ? '/' + segments[0] : '';
       var route = knownBase && path.indexOf(knownBase) === 0 ? path.slice(knownBase.length) : path;
       var target = window.location.origin + knownBase + '/?p=' + encodeURIComponent(route || '/');
       window.location.replace(target);

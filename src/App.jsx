@@ -9,6 +9,8 @@ import ServicesPage from './ServicesPage';
 import ClientsPage from './ClientsPage';
 import ContactPage from './ContactPage';
 import SupportPage from './SupportPage';
+import ResourcesPage from './ResourcesPage';
+import IndiaSolutionsPage from './IndiaSolutionsPage';
 import { useSEO } from './hooks/useSEO';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -47,14 +49,15 @@ const NAV_ITEMS = [
       { label: 'AI-Powered SmartClass', to: '/services#smartclass' },
       { label: 'Networking Solutions', to: '/services#networking' },
       { label: 'Campus Surveillance', to: '/services#surveillance' },
+      { label: 'Solutions in India', to: '/smart-classroom-solutions-india' },
     ],
   },
   {
     label: 'Support',
-    to: '/contact',
+    to: '/support',
     children: [
       { label: 'Warranty Policy', to: '/support#warranty' },
-      { label: 'Resource Center', to: '/support#resources' },
+      { label: 'Resource Center', to: '/resources' },
       { label: 'Service Request', to: '/support#request' },
       { label: 'All Support', to: '/support' },
     ],
@@ -763,7 +766,7 @@ const Footer = () => {
             <h4 className="font-semibold mb-6 text-[#FF9F1B]">Support</h4>
             <ul className="space-y-4 text-white/60 font-medium">
               <li><Link to="/support#warranty" className="hover:text-white transition-colors">Warranty Policy</Link></li>
-              <li><Link to="/support#resources" className="hover:text-white transition-colors">Resource Center</Link></li>
+              <li><Link to="/resources" className="hover:text-white transition-colors">Resource Center</Link></li>
               <li><Link to="/support#request" className="hover:text-white transition-colors">Service Request</Link></li>
               <li><Link to="/contact" className="hover:text-white transition-colors">Technical Support</Link></li>
             </ul>
@@ -774,6 +777,7 @@ const Footer = () => {
             <ul className="space-y-4 text-white/60 font-medium">
               <li><Link to="/about" className="hover:text-white transition-colors">About Us</Link></li>
               <li><Link to="/clients" className="hover:text-white transition-colors">Our Clients</Link></li>
+              <li><Link to="/smart-classroom-solutions-india" className="hover:text-white transition-colors">Solutions in India</Link></li>
               <li><Link to="/contact" className="hover:text-white transition-colors">Contact Us</Link></li>
               <li><Link to="/about" className="hover:text-white transition-colors">Privacy Policy</Link></li>
             </ul>
@@ -925,6 +929,8 @@ function App() {
             <Route path="/clients" element={<ClientsPage />} />
             <Route path="/contact" element={<ContactPage />} />
             <Route path="/support" element={<SupportPage />} />
+            <Route path="/resources" element={<ResourcesPage />} />
+            <Route path="/smart-classroom-solutions-india" element={<IndiaSolutionsPage />} />
           </Routes>
         </main>
         <Footer />

@@ -62,17 +62,16 @@ const Hero = ({ onExplore, onCompare }) => {
                 {/* Left: Text (55%) */}
                 <div className="lg:col-span-6 space-y-8">
                     <span className="hero-tag inline-block text-[#FF9F1B] font-bold tracking-[0.2em] uppercase text-xs md:text-sm">
-                        InfinityX · Interactive Displays
+                        InfinityX · Products
                     </span>
 
                     <h1 className="hero-h1 font-display font-extrabold text-4xl sm:text-5xl md:text-6xl lg:text-7xl tracking-tighter text-foreground leading-[1.05]">
-                        Interactive Displays.<br />
-                        Built for <span className="text-[#FF9F1B]">Every</span> Classroom.
+                        Products.<br />
+                        Built for <span className="text-[#FF9F1B]">Classrooms</span> and Collaboration.
                     </h1>
 
                     <p className="hero-body text-base md:text-xl text-foreground/60 font-medium max-w-lg leading-relaxed">
-                        Three series. One purpose — transform how teachers teach and
-                        students learn, across every budget and every environment.
+                        Three interactive display series built for schools, training rooms, meeting spaces, and modern teaching environments across every budget tier.
                     </p>
 
                     <div className="hero-btns flex flex-wrap gap-4">
@@ -161,6 +160,68 @@ const SeriesNav = ({ activeTab, onTabClick, onCompare }) => {
 // ═══════════════════════════════════════════════════════════════════════
 // SECTION 3 — VALUE SERIES
 // ═══════════════════════════════════════════════════════════════════════
+const PRODUCT_USE_CASES = [
+    {
+        icon: Monitor,
+        title: 'Interactive flat panels for schools',
+        description: 'Touch-enabled digital boards for lessons, annotation, smart classrooms, and daily teaching workflows.',
+        linkLabel: 'See classroom-ready models',
+        to: '/products#value',
+    },
+    {
+        icon: LayoutTemplate,
+        title: 'Displays for training and meeting rooms',
+        description: 'Collaboration displays designed for presentations, workshops, wireless sharing, and business communication.',
+        linkLabel: 'Explore business-ready options',
+        to: '/products#cseries',
+    },
+    {
+        icon: ShieldCheck,
+        title: 'Premium panels for large deployments',
+        description: 'Advanced display systems for institutions and organizations planning multi-room or high-spec rollouts.',
+        linkLabel: 'Compare Pro Series',
+        to: '/products#pro',
+    },
+];
+
+const ProductUseCases = () => (
+    <section className="border-b border-bento/50 bg-[#F9F9F9] px-6 py-12 md:py-16">
+        <div className="mx-auto max-w-screen-2xl">
+            <div className="mb-10 max-w-3xl">
+                <span className="mb-4 block text-xs font-bold uppercase tracking-[0.2em] text-[#FF9F1B] md:text-sm">Use Cases</span>
+                <h2 className="mb-4 text-3xl font-display font-bold tracking-tight text-foreground md:text-5xl">Choose the right panel for the way your teams teach, train, and present.</h2>
+                <p className="text-base font-medium leading-relaxed text-foreground/60 md:text-lg">
+                    This section helps visitors land on the most relevant series faster, while expanding the page around the search intent behind interactive flat panel buying decisions.
+                </p>
+            </div>
+
+            <div className="grid gap-6 md:grid-cols-3">
+                {PRODUCT_USE_CASES.map((item) => {
+                    const Icon = item.icon;
+
+                    return (
+                        <Link
+                            key={item.title}
+                            to={item.to}
+                            className="group rounded-[28px] border border-foreground/8 bg-background p-8 shadow-sm transition-all hover:-translate-y-1 hover:border-[#FF9F1B]/25 hover:shadow-xl hover:shadow-[#FF9F1B]/5"
+                        >
+                            <div className="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-[#FF9F1B]/10 text-[#FF9F1B]">
+                                <Icon size={24} />
+                            </div>
+                            <h3 className="mb-3 text-2xl font-display font-bold text-foreground">{item.title}</h3>
+                            <p className="mb-6 text-sm font-medium leading-relaxed text-foreground/60 md:text-base">{item.description}</p>
+                            <span className="inline-flex items-center gap-2 text-sm font-bold text-[#FF9F1B]">
+                                {item.linkLabel}
+                                <ChevronRight size={16} className="transition-transform group-hover:translate-x-1" />
+                            </span>
+                        </Link>
+                    );
+                })}
+            </div>
+        </div>
+    </section>
+);
+
 const VALUE_SPECS = [
     { icon: <Monitor className="w-6 h-6" />, value: '4K UHD', label: 'Anti-Glare Display' },
     { icon: <Touchpad className="w-6 h-6" />, value: '20-Point', label: 'Multi-Touch Screen' },
@@ -913,22 +974,49 @@ const ProductsPage = () => {
     useSEO({
         title: "Interactive Displays & Smart Boards | InfinityX",
         description: "Compare our Eco Series, C-Series, and Pro Series interactive displays. Engineered for education and corporate environments with 4K UHD, AI features, and multi-touch.",
-        keywords: "Interactive displays comparison, smart board specs, EDLA certified displays, InfinityX Pro Series, C-Series"
+        keywords: "Interactive displays comparison, smart board specs, EDLA certified displays, InfinityX Pro Series, C-Series",
+        path: "/products",
+        image: "/images/ID2.png",
+        structuredData: {
+            "@context": "https://schema.org",
+            "@type": "ItemList",
+            name: "InfinityX Interactive Display Series",
+            itemListElement: [
+                {
+                    "@type": "ListItem",
+                    position: 1,
+                    name: "InfinityX Value Series",
+                    url: "https://www.infinityxglobal.com/products#value"
+                },
+                {
+                    "@type": "ListItem",
+                    position: 2,
+                    name: "InfinityX C-Series",
+                    url: "https://www.infinityxglobal.com/products#cseries"
+                },
+                {
+                    "@type": "ListItem",
+                    position: 3,
+                    name: "InfinityX Pro Series",
+                    url: "https://www.infinityxglobal.com/products#pro"
+                }
+            ]
+        }
     });
     const [activeTab, setActiveTab] = useState('value');
     const tableRef = useRef(null);
-
-    // Section refs for scroll spy + tab click
-    const sectionRefs = {
-        value: useRef(null),
-        cseries: useRef(null),
-        pro: useRef(null),
-    };
+    const valueRef = useRef(null);
+    const cseriesRef = useRef(null);
+    const proRef = useRef(null);
 
     // Scroll spy via IntersectionObserver
     useEffect(() => {
         const observers = [];
-        Object.entries(sectionRefs).forEach(([id, ref]) => {
+        [
+            ['value', valueRef],
+            ['cseries', cseriesRef],
+            ['pro', proRef],
+        ].forEach(([id, ref]) => {
             if (!ref.current) return;
             const obs = new IntersectionObserver(
                 ([entry]) => { if (entry.isIntersecting) setActiveTab(id); },
@@ -962,18 +1050,20 @@ const ProductsPage = () => {
                 onCompare={scrollToCompare}
             />
 
+            <ProductUseCases />
+
             {/* S3: Value Series */}
-            <div ref={sectionRefs.value}>
+            <div ref={valueRef}>
                 <ValueSeries />
             </div>
 
             {/* S4: C-Series */}
-            <div ref={sectionRefs.cseries}>
+            <div ref={cseriesRef}>
                 <CSeries />
             </div>
 
             {/* S5: Pro Series */}
-            <div ref={sectionRefs.pro}>
+            <div ref={proRef}>
                 <ProSeries />
             </div>
 

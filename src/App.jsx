@@ -8,6 +8,7 @@ import AboutPage from './AboutPage';
 import ServicesPage from './ServicesPage';
 import ClientsPage from './ClientsPage';
 import ContactPage from './ContactPage';
+import SupportPage from './SupportPage';
 import { useSEO } from './hooks/useSEO';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -15,19 +16,32 @@ gsap.registerPlugin(ScrollTrigger);
 
 
 // ─── NAV DATA ────────────────────────────────────────────────────────────────
+// ─── NAV DATA ────────────────────────────────────────────────────────────────
 const NAV_ITEMS = [
   {
-    label: 'Interactive Displays',
+    label: 'Products',
     to: '/products',
-    children: [
-      { label: 'Value Series', to: '/products#value' },
-      { label: 'C-Series', to: '/products#cseries' },
-      { label: 'Pro Series', to: '/products#pro' },
-      { label: 'Compare All', to: '/products#compare' },
-    ],
+    children: {
+      categories: [
+        { 
+          label: 'Products', 
+          items: [
+            { label: 'Interactive Flat Panel', to: '/products#value', series: ['Value Series', 'C-Series', 'Pro Series'] },
+            { label: 'Commercial Display', to: '/products#commercial' },
+            { label: 'LED Display', to: '/products#led' },
+            { label: 'Unified Communication', to: '/products#uc' },
+            { label: 'Accessories', to: '/products#accessories' },
+            { label: 'All Products', to: '/products' },
+          ]
+        }
+      ],
+      featured: [
+        { label: 'New Arrivals', to: '/products' }
+      ]
+    }
   },
   {
-    label: 'Digital Solutions',
+    label: 'Solutions',
     to: '/services',
     children: [
       { label: 'AI-Powered SmartClass', to: '/services#smartclass' },
@@ -36,8 +50,25 @@ const NAV_ITEMS = [
     ],
   },
   {
+    label: 'Support',
+    to: '/contact',
+    children: [
+      { label: 'Warranty Policy', to: '/support#warranty' },
+      { label: 'Resource Center', to: '/support#resources' },
+      { label: 'Service Request', to: '/support#request' },
+      { label: 'All Support', to: '/support' },
+    ],
+  },
+  {
     label: 'Our Clients',
     to: '/clients',
+    children: [
+      { label: 'Educational Institutions', to: '/clients#education' },
+      { label: 'Corporate Partners', to: '/clients#corporate' },
+      { label: 'Government Projects', to: '/clients#government' },
+      { label: 'Success Metrics', to: '/clients#metrics' },
+      { label: 'All Case Studies', to: '/clients' },
+    ],
   },
   {
     label: 'Company',
@@ -53,51 +84,152 @@ const NAV_ITEMS = [
 const DesktopMegaMenu = ({ item, isOpen, onClose }) => {
   if (!item?.children) return null;
 
-  // Decide which image to show based on the top-level label
+  const isProducts = item.label === 'Products';
+  const isSupport = item.label === 'Support';
+
   const categoryImage = 
-    item.label === 'Interactive Displays' ? `${import.meta.env.BASE_URL}images/ID2.png` :
-    item.label === 'Digital Solutions' ? `${import.meta.env.BASE_URL}images/Network.png` :
+    item.label === 'Products' ? `${import.meta.env.BASE_URL}images/ID2.png` :
+    item.label === 'Solutions' ? `${import.meta.env.BASE_URL}images/Network.png` :
+    item.label === 'Support' ? `${import.meta.env.BASE_URL}images/INFINITYX.png` :
+    item.label === 'Our Clients' ? `${import.meta.env.BASE_URL}images/ID3.jpg` :
     `${import.meta.env.BASE_URL}images/home_page_final.jpeg`;
 
   return (
     <div
-      className={`fixed top-20 left-0 w-full bg-white shadow-2xl border-b border-foreground/5 shadow-black/5 overflow-hidden transition-all duration-300 origin-top cursor-default ${
+      className={`fixed top-20 left-0 w-full bg-white shadow-2xl border-b border-foreground/5 shadow-black/5 overflow-hidden transition-all duration-300 origin-top cursor-default h-[70vh] ${
         isOpen ? 'opacity-100 scale-y-100 pointer-events-auto' : 'opacity-0 scale-y-95 pointer-events-none'
       }`}
     >
-      <div className="max-w-7xl mx-auto px-6 py-10 flex gap-8 lg:gap-16">
-        {/* Left Side: Links */}
-        <div className="w-1/3 lg:w-1/4 border-r border-foreground/10 pr-8">
-          <h3 className="text-sm font-bold text-foreground/40 uppercase tracking-widest mb-6">{item.label}</h3>
-          <div className="space-y-2">
-            {item.children.map((child) => (
-              <Link
-                key={child.to}
-                to={child.to}
-                onClick={onClose}
-                className="flex items-center justify-between w-full px-4 py-3 rounded-lg text-sm font-bold text-foreground/80 hover:bg-[#FF9F1B]/5 hover:text-[#FF9F1B] transition-colors group"
-              >
-                {child.label}
-                <ChevronRight size={16} className="opacity-0 group-hover:opacity-100 transition-opacity" />
-              </Link>
-            ))}
-          </div>
-        </div>
-
-        {/* Right Side: Featured Image & Promo */}
-        <div className="flex-1 flex items-center justify-center p-8 bg-[#F9F9F9] rounded-2xl relative overflow-hidden group">
-            <div className="absolute inset-0 bg-gradient-to-r from-transparent to-[#FF9F1B]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-            <div className="flex items-center gap-8 lg:gap-16 z-10 w-full max-w-3xl">
-               <div className="flex-1 space-y-4">
-                  <span className="px-3 py-1 bg-[#FF9F1B]/10 text-[#FF9F1B] text-xs font-bold rounded-full uppercase tracking-widest">Featured Explore</span>
-                  <h4 className="text-2xl font-display font-bold text-foreground">Discover {item.label}</h4>
-                  <p className="text-sm text-foreground/60 font-medium leading-relaxed">
-                    Explore our premium range of advanced hardware and enterprise-grade integrations designed to transform your operations and learning environments.
-                  </p>
-               </div>
-               <img src={categoryImage} alt={item.label} className="w-48 lg:w-64 h-auto object-contain drop-shadow-xl group-hover:scale-105 transition-transform duration-500" />
+      <div className="max-w-7xl mx-auto px-6 py-12 flex gap-0 h-full">
+        
+        {/* Case 1: Products (Multi-column) */}
+        {isProducts ? (
+          <>
+            {/* Left Sidebar: Categories */}
+            <div className="w-[280px] border-r border-foreground/5 pr-8 space-y-10">
+              {item.children.featured && (
+                <div>
+                  <h3 className="text-[11px] font-bold text-foreground/30 uppercase tracking-[0.2em] mb-4">Featured</h3>
+                  {item.children.featured.map(f => (
+                    <Link key={f.label} to={f.to} onClick={onClose} className="block text-sm font-bold text-foreground/80 hover:text-[#FF9F1B] py-2 transition-colors">{f.label}</Link>
+                  ))}
+                </div>
+              )}
+              {item.children.categories.map(cat => (
+                <div key={cat.label}>
+                  <h3 className="text-[11px] font-bold text-foreground/30 uppercase tracking-[0.2em] mb-4">{cat.label}</h3>
+                  <div className="space-y-1">
+                    {cat.items.map(sub => (
+                      <Link 
+                        key={sub.label} 
+                        to={sub.to} 
+                        onClick={onClose} 
+                        className="flex items-center justify-between group py-2.5 px-3 rounded-lg hover:bg-[#FF9F1B]/5 transition-all"
+                      >
+                        <span className="text-[13px] font-bold text-foreground/70 group-hover:text-[#FF9F1B]">{sub.label}</span>
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              ))}
             </div>
-        </div>
+
+            {/* Middle: Series Grid */}
+            <div className="flex-1 px-12 grid grid-cols-2 gap-x-8 gap-y-4 items-start">
+               {/* Show specific series for the primary category */}
+               <div className="col-span-2 mb-6">
+                  <h3 className="text-sm font-bold text-[#FF9F1B] border-b border-[#FF9F1B]/10 pb-2">Interactive Flat Panels</h3>
+               </div>
+               {['Value Series', 'C-Series', 'Pro Series', 'Smart Blackboard', 'U4 Series', 'U3 Series', 'E3 Series', 'E2 Series', 'V Series', 'T Series'].map(series => (
+                 <Link 
+                  key={series} 
+                  to={series === 'Value Series' ? '/products#value' : series === 'C-Series' ? '/products#cseries' : series === 'Pro Series' ? '/products#pro' : '/products'}
+                  onClick={onClose}
+                  className="group flex items-center justify-between py-3 border-b border-foreground/5 hover:border-[#FF9F1B]/20 transition-all"
+                 >
+                   <span className="text-sm font-semibold text-foreground/60 group-hover:text-foreground transition-colors">{series}</span>
+
+                 </Link>
+               ))}
+            </div>
+
+            {/* Right: Featured Panel */}
+            <div className="w-[320px] bg-[#F9F9F9] rounded-2xl p-8 flex flex-col items-center justify-center text-center group">
+               <img src={categoryImage} alt="Products" className="w-full h-40 object-contain drop-shadow-xl mb-6 group-hover:scale-105 transition-transform duration-500" />
+               <Link to="/products" onClick={onClose} className="text-sm font-bold text-foreground hover:text-[#FF9F1B] flex items-center gap-2 group/link">
+                 All Interactive Flat Panels <ChevronRight size={16} className="group-hover/link:translate-x-1 transition-transform" />
+               </Link>
+            </div>
+          </>
+        ) : isSupport ? (
+          <>
+            {/* Support Layout */}
+            <div className="w-[280px] border-r border-foreground/5 pr-8">
+               <h3 className="text-[11px] font-bold text-foreground/30 uppercase tracking-[0.2em] mb-6">Support</h3>
+               <div className="space-y-1">
+                 {Array.isArray(item.children) && item.children.map(sub => (
+                   <Link 
+                    key={sub.label} 
+                    to={sub.to} 
+                    onClick={onClose} 
+                    className="flex items-center justify-between group py-3 px-3 rounded-lg hover:bg-[#FF9F1B]/5 transition-all"
+                   >
+                     <span className="text-[13px] font-bold text-foreground/70 group-hover:text-[#FF9F1B]">{sub.label}</span>
+
+                   </Link>
+                 ))}
+               </div>
+            </div>
+            <div className="flex-1 flex items-center justify-center p-12 relative overflow-hidden group">
+               <div className="absolute inset-0 bg-gradient-to-br from-transparent to-[#FF9F1B]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+               <div className="z-10 text-center space-y-6">
+                  <img src={categoryImage} alt="Support" className="h-32 object-contain mx-auto drop-shadow-lg mb-4" />
+                  <Link to="/contact" onClick={onClose} className="text-sm font-bold text-foreground hover:text-[#FF9F1B] flex items-center gap-2 justify-center group/link">
+                    All Support <ChevronRight size={16} className="group-hover/link:translate-x-1 transition-transform" />
+                  </Link>
+               </div>
+            </div>
+          </>
+        ) : (
+          /* Default Case (Solutions, Company) */
+          <>
+            <div className="w-1/3 lg:w-1/4 border-r border-foreground/10 pr-8">
+              <h3 className="text-sm font-bold text-foreground/40 uppercase tracking-widest mb-6">{item.label}</h3>
+              <div className="space-y-2">
+                {Array.isArray(item.children) && item.children.map((child) => (
+                  <Link
+                    key={child.to}
+                    to={child.to}
+                    onClick={onClose}
+                    className="flex items-center justify-between w-full px-4 py-3 rounded-lg text-sm font-bold text-foreground/80 hover:bg-[#FF9F1B]/5 hover:text-[#FF9F1B] transition-colors group"
+                  >
+                    {child.label}
+                  </Link>
+                ))}
+              </div>
+            </div>
+
+            <div className="flex-1 flex items-center justify-center p-8 bg-[#F9F9F9] rounded-2xl relative overflow-hidden group">
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent to-[#FF9F1B]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <div className="flex items-center gap-8 lg:gap-16 z-10 w-full max-w-3xl">
+                    <div className="flex-1 space-y-4">
+                       <span className="px-3 py-1 bg-[#FF9F1B]/10 text-[#FF9F1B] text-xs font-bold rounded-full uppercase tracking-widest">
+                         {item.label === 'Our Clients' ? 'Trusted by Leaders' : 'Featured Explore'}
+                       </span>
+                       <h4 className="text-2xl font-display font-bold text-foreground">
+                         {item.label === 'Our Clients' ? 'Our Success Stories' : `Discover ${item.label}`}
+                       </h4>
+                       <p className="text-sm text-foreground/60 font-medium leading-relaxed">
+                         {item.label === 'Our Clients' 
+                           ? 'InfinityX is proud to partner with leading educational institutions and enterprises to deliver transformative technology infrastructure.'
+                           : 'Explore our premium range of advanced hardware and enterprise-grade integrations designed to transform your operations.'}
+                       </p>
+                    </div>
+                   <img src={categoryImage} alt={item.label} className="w-48 lg:w-64 h-auto object-contain drop-shadow-xl group-hover:scale-105 transition-transform duration-500" />
+                </div>
+            </div>
+          </>
+        )}
 
       </div>
     </div>
@@ -115,6 +247,7 @@ const Navbar = () => {
 
   // Close everything on route change
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setMobileOpen(false);
     setExpandedItems({});
   }, [location]);
@@ -142,6 +275,19 @@ const Navbar = () => {
     }
   };
 
+  // Helper to get mobile structure from children (which can be array or object)
+  const getMobileChildren = (item) => {
+    if (!item.children) return [];
+    if (Array.isArray(item.children)) return item.children;
+    // For Products object structure
+    const all = [];
+    if (item.children.featured) all.push(...item.children.featured);
+    if (item.children.categories) {
+      item.children.categories.forEach(cat => all.push(...cat.items));
+    }
+    return all;
+  };
+
   return (
     <>
       {/* ── Desktop & Mobile Navbar Container ── */}
@@ -161,20 +307,12 @@ const Navbar = () => {
                 onMouseEnter={() => setDesktopHover(item.label)}
                 onMouseLeave={() => setDesktopHover(null)}
               >
-                <Link
-                  to={item.to}
-                  className="flex items-center gap-1 px-4 py-2 rounded-xl hover:text-[#FF9F1B] hover:bg-[#FF9F1B]/5 transition-colors"
-                >
-                  {item.label}
-                  {item.children && (
-                    <ChevronRight
-                      size={14}
-                      className={`transition-transform duration-200 ${
-                        desktopHover === item.label ? 'rotate-90' : ''
-                      }`}
-                    />
-                  )}
-                </Link>
+                  <Link
+                    to={item.to}
+                    className="flex items-center gap-1 px-4 py-2 rounded-xl hover:text-[#FF9F1B] hover:bg-[#FF9F1B]/5 transition-colors"
+                  >
+                    {item.label}
+                  </Link>
                 <DesktopMegaMenu
                   item={item}
                   isOpen={desktopHover === item.label}
@@ -257,7 +395,7 @@ const Navbar = () => {
                       >
                         Explore Overview &rarr;
                       </button>
-                    {item.children.map((child) => (
+                    {getMobileChildren(item).map((child) => (
                       <button
                         key={child.to}
                         onClick={() => handleMobileLeafClick(child.to)}
@@ -461,14 +599,137 @@ const ClientMarquee = () => {
   );
 };
 
+const HOME_STATS = [
+  { value: '13+', label: 'Years of Excellence' },
+  { value: '2000+', label: 'Happy Customers' },
+  { value: '150+', label: 'Distributors' },
+  { value: '25+', label: 'Government Projects' },
+];
+
+const HOME_SOLUTIONS = [
+  {
+    title: 'Interactive Display Systems',
+    description: 'Interactive flat panels, smart boards, and classroom-ready display solutions designed for teaching, training, and collaboration.',
+    to: '/products',
+    icon: Monitor,
+  },
+  {
+    title: 'Campus & Enterprise Networking',
+    description: 'LAN, WAN, Wi-Fi, server, and infrastructure integration for schools, institutions, and modern enterprise environments.',
+    to: '/services#networking',
+    icon: Network,
+  },
+  {
+    title: 'Surveillance & Security',
+    description: 'CCTV architecture, command centers, access control, and monitored security deployments built for operational visibility.',
+    to: '/services#surveillance',
+    icon: Shield,
+  },
+];
+
+const HOME_FAQS = [
+  {
+    question: 'What solutions does InfinityX provide?',
+    answer: 'InfinityX delivers interactive flat panels, AI-powered smart classroom setups, networking infrastructure, campus surveillance, digital signage, and supporting IT integration services.',
+  },
+  {
+    question: 'Who are InfinityX solutions designed for?',
+    answer: 'The current site content is aimed at educational institutions, training environments, government projects, and enterprise teams that need reliable display and infrastructure systems.',
+  },
+  {
+    question: 'Can InfinityX help with deployment and post-sales support?',
+    answer: 'Yes. The site already positions InfinityX as an end-to-end integration partner for solution design, installation, deployment, and ongoing support through its contact and support flows.',
+  },
+  {
+    question: 'Which interactive panel sizes are available?',
+    answer: 'The product range showcased in this repo includes 65-inch, 75-inch, and 86-inch panel sizes across the Value Series, C-Series, and Pro Series.',
+  },
+];
+
+const HomepageStats = () => (
+  <section className="border-y border-bento/50 bg-[#F9F9F9] px-6 py-10 md:py-16">
+    <div className="mx-auto grid max-w-7xl grid-cols-2 gap-4 md:grid-cols-4 md:gap-6">
+      {HOME_STATS.map((stat) => (
+        <div key={stat.label} className="rounded-3xl border border-foreground/5 bg-white p-6 shadow-sm">
+          <p className="mb-2 text-3xl font-display font-bold text-foreground md:text-5xl">{stat.value}</p>
+          <p className="text-xs font-bold uppercase tracking-[0.18em] text-foreground/50 md:text-sm">{stat.label}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+);
+
+const HomepageIntentGrid = () => (
+  <section className="border-b border-bento/50 bg-background px-6 py-16 md:py-24">
+    <div className="mx-auto max-w-7xl">
+      <div className="mb-12 max-w-3xl">
+        <span className="mb-4 block text-xs font-bold uppercase tracking-[0.2em] text-[#FF9F1B] md:text-sm">Built Around Buying Intent</span>
+        <h2 className="mb-4 text-4xl font-display font-bold tracking-tight text-foreground md:text-5xl">Solutions for schools, campuses, and enterprise teams.</h2>
+        <p className="text-base font-medium leading-relaxed text-foreground/60 md:text-lg">
+          Explore the core categories buyers search for most often when planning classroom technology, enterprise integration, or campus-wide infrastructure upgrades.
+        </p>
+      </div>
+
+      <div className="grid gap-6 md:grid-cols-3">
+        {HOME_SOLUTIONS.map((item) => {
+          const Icon = item.icon;
+
+          return (
+            <Link
+              key={item.title}
+              to={item.to}
+              className="group rounded-[28px] border border-foreground/8 bg-[#F9F9F9] p-8 shadow-sm transition-all hover:-translate-y-1 hover:border-[#FF9F1B]/25 hover:shadow-xl hover:shadow-[#FF9F1B]/5"
+            >
+              <div className="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-white text-[#FF9F1B] shadow-sm">
+                <Icon size={24} />
+              </div>
+              <h3 className="mb-3 text-2xl font-display font-bold text-foreground">{item.title}</h3>
+              <p className="mb-6 text-sm font-medium leading-relaxed text-foreground/60 md:text-base">{item.description}</p>
+              <span className="inline-flex items-center gap-2 text-sm font-bold text-[#FF9F1B]">
+                Explore Solution <ChevronRight size={16} className="transition-transform group-hover:translate-x-1" />
+              </span>
+            </Link>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+);
+
+const HomepageFaq = () => (
+  <section className="bg-background px-6 py-16 md:py-24">
+    <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[1.1fr_1fr] lg:items-start">
+      <div>
+        <span className="mb-4 block text-xs font-bold uppercase tracking-[0.2em] text-[#FF9F1B] md:text-sm">FAQ</span>
+        <h2 className="mb-4 text-4xl font-display font-bold tracking-tight text-foreground md:text-5xl">Questions decision-makers ask before booking a demo.</h2>
+        <p className="max-w-2xl text-base font-medium leading-relaxed text-foreground/60 md:text-lg">
+          These answers strengthen topical coverage and give visitors quick clarity on deployment fit, service scope, and product availability before they reach out.
+        </p>
+        <div className="mt-8">
+          <Link
+            to="/contact"
+            className="inline-flex items-center gap-3 rounded-full bg-[#FF9F1B] px-8 py-4 text-base font-bold text-white shadow-xl shadow-[#FF9F1B]/20 transition-all hover:scale-105 hover:bg-[#FF9F1B]/90 active:scale-95"
+          >
+            Talk to Sales <ArrowRight size={18} />
+          </Link>
+        </div>
+      </div>
+
+      <div className="space-y-4">
+        {HOME_FAQS.map((item) => (
+          <div key={item.question} className="rounded-3xl border border-foreground/8 bg-[#F9F9F9] p-6 shadow-sm">
+            <h3 className="mb-3 text-lg font-bold text-foreground md:text-xl">{item.question}</h3>
+            <p className="text-sm font-medium leading-relaxed text-foreground/60 md:text-base">{item.answer}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+);
+
 
 
 const Footer = () => {
-  const location = useLocation();
-  if (location.pathname !== '/' && location.pathname !== '/about') {
-    return null;
-  }
-
   return (
     <footer className="bg-[#1D1D1F] text-white pt-16 md:pt-24 pb-8 md:pb-12 px-6">
       <div className="max-w-7xl mx-auto">
@@ -489,22 +750,32 @@ const Footer = () => {
           </div>
 
           <div>
-            <h4 className="font-semibold mb-6">Products</h4>
+            <h4 className="font-semibold mb-6 text-[#FF9F1B]">Products</h4>
             <ul className="space-y-4 text-white/60 font-medium">
-              <li><Link to="/products" className="hover:text-white transition-colors">Eco Interactive Display</Link></li>
-              <li><Link to="/products" className="hover:text-white transition-colors">Interactive Whiteboard</Link></li>
-              <li><Link to="/products" className="hover:text-white transition-colors">Corporate Display</Link></li>
-              <li><Link to="/products" className="hover:text-white transition-colors">Digital Signage</Link></li>
+              <li><Link to="/products#value" className="hover:text-white transition-colors">Value Series IFPD</Link></li>
+              <li><Link to="/products#cseries" className="hover:text-white transition-colors">C-Series IFPD</Link></li>
+              <li><Link to="/products#pro" className="hover:text-white transition-colors">Pro Series IFPD</Link></li>
+              <li><Link to="/services" className="hover:text-white transition-colors">Digital Solutions</Link></li>
             </ul>
           </div>
 
           <div>
-            <h4 className="font-semibold mb-6">Company</h4>
+            <h4 className="font-semibold mb-6 text-[#FF9F1B]">Support</h4>
+            <ul className="space-y-4 text-white/60 font-medium">
+              <li><Link to="/support#warranty" className="hover:text-white transition-colors">Warranty Policy</Link></li>
+              <li><Link to="/support#resources" className="hover:text-white transition-colors">Resource Center</Link></li>
+              <li><Link to="/support#request" className="hover:text-white transition-colors">Service Request</Link></li>
+              <li><Link to="/contact" className="hover:text-white transition-colors">Technical Support</Link></li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 className="font-semibold mb-6 text-[#FF9F1B]">Company</h4>
             <ul className="space-y-4 text-white/60 font-medium">
               <li><Link to="/about" className="hover:text-white transition-colors">About Us</Link></li>
-              <li><Link to="/services" className="hover:text-white transition-colors">Our Services</Link></li>
+              <li><Link to="/clients" className="hover:text-white transition-colors">Our Clients</Link></li>
+              <li><Link to="/contact" className="hover:text-white transition-colors">Contact Us</Link></li>
               <li><Link to="/about" className="hover:text-white transition-colors">Privacy Policy</Link></li>
-              <li><Link to="/about" className="hover:text-white transition-colors">Contact Matrix Edge</Link></li>
             </ul>
           </div>
         </div>
@@ -521,10 +792,51 @@ const Footer = () => {
 }
 
 const LandingPage = () => {
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: HOME_FAQS.map((item) => ({
+      "@type": "Question",
+      name: item.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: item.answer,
+      },
+    })),
+  };
+
   useSEO({
-    title: "InfinityX | Premium System Integration",
-    description: "Premier system integration partner delivering high-performance IT infrastructure and intelligent display solutions across education and enterprise environments.",
-    keywords: "Interactive Displays, Smart Boards, IFPD, Education Technology, System Integration, C-Series, Eco Series, Pro Series, Matrix Edge"
+    title: "InfinityX | Interactive Displays, Smart Classrooms & IT Integration",
+    description: "InfinityX provides interactive flat panels, smart classroom systems, campus networking, surveillance, and end-to-end IT integration for schools, institutions, and enterprise teams across India.",
+    keywords: "interactive flat panel India, smart classroom solutions, digital boards for schools, enterprise IT integration, campus networking, CCTV surveillance solutions",
+    path: '/',
+    image: '/images/home_page_final.jpeg',
+    structuredData: [
+      {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        name: "InfinityX",
+        url: "https://www.infinityxglobal.com/",
+        logo: "https://www.infinityxglobal.com/images/INFINITYX.png",
+        email: "contact@infinityxglobal.com",
+        telephone: "+91 9292252880",
+        address: {
+          "@type": "PostalAddress",
+          streetAddress: "APIIC Industrial Area C4/110, 100 Feet Rd",
+          addressLocality: "Vijayawada",
+          addressRegion: "Andhra Pradesh",
+          postalCode: "520007",
+          addressCountry: "IN",
+        },
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        name: "InfinityX",
+        url: "https://www.infinityxglobal.com/",
+      },
+      faqSchema,
+    ],
   });
 
   return (
@@ -532,14 +844,14 @@ const LandingPage = () => {
     {/* Scroll-1: Hero — text only, fullscreen */}
     <Hero />
 
-    {/* Scroll-2: Interactive Displays */}
+    {/* Scroll-2: Products */}
     <ScrollSection
       image={`${import.meta.env.BASE_URL}images/home_page_final.jpeg`}
-      imageAlt="InfinityX Interactive Displays"
+      imageAlt="InfinityX Products"
       badge="Flagship Product"
-      title="Interactive Displays. Built for Learning & Business."
+      title="Products. Built for Learning & Business."
       description="InfinityX smart boards deliver 4K UHD visuals, 64-point multi-touch, built-in AI cameras, and an 8-array microphone system — engineered for education and enterprise collaboration."
-      ctaLabel="Explore Interactive Displays"
+      ctaLabel="Explore All Products"
       ctaTo="/products"
       imageOnRight={true}
     />
@@ -568,7 +880,10 @@ const LandingPage = () => {
       imageOnRight={true}
     />
 
+    <HomepageStats />
+    <HomepageIntentGrid />
     <ClientMarquee />
+    <HomepageFaq />
   </>
   );
 };
@@ -609,6 +924,7 @@ function App() {
             <Route path="/services" element={<ServicesPage />} />
             <Route path="/clients" element={<ClientsPage />} />
             <Route path="/contact" element={<ContactPage />} />
+            <Route path="/support" element={<SupportPage />} />
           </Routes>
         </main>
         <Footer />

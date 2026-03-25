@@ -10,7 +10,9 @@ const AboutPage = () => {
     useSEO({
         title: "About InfinityX | Matrix Edge Computers",
         description: "Learn about Matrix Edge Computers (MEC) and InfinityX. Over a decade of experience delivering top-tier IT infrastructure and system integration services.",
-        keywords: "About InfinityX, Matrix Edge Computers, IT Infrastructure Provider, System Integrator India"
+        keywords: "About InfinityX, Matrix Edge Computers, IT Infrastructure Provider, System Integrator India",
+        path: "/about",
+        image: "/images/INFINITYX.png"
     });
 
     useEffect(() => {

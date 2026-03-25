@@ -3,12 +3,12 @@ import { useSEO } from './hooks/useSEO';
 import { Link } from 'react-router-dom';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Shield, Wifi, Check, Cpu, ArrowRight, ChevronRight, CheckCircle2 } from 'lucide-react';
+import { ArrowRight, ChevronRight, CheckCircle2 } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
 
 // Reusable scroll section for internal pages to maintain cinematic feel
-const ServiceSection = ({ id, image, imageAlt, badge, title, description, features, partners, ctaLabel, ctaTo, imageOnRight = true }) => {
+const ServiceSection = ({ id, image, imageAlt, title, description, features, partners, imageOnRight = true }) => {
     const ref = useRef(null);
 
     useEffect(() => {
@@ -98,12 +98,40 @@ const ServiceSection = ({ id, image, imageAlt, badge, title, description, featur
 
 const ServicesPage = () => {
     useSEO({
-        title: "Digital Solutions & Integration Services | InfinityX",
-        description: "Explore our comprehensive IT infrastructure, networking, and campus surveillance solutions. We provide end-to-end integration for education and enterprises.",
-        keywords: "IT Infrastructure, Campus Surveillance, Networking Solutions, Education Technology, SmartClass Setup"
+        title: "Smart Classroom, Networking & Surveillance Services | InfinityX",
+        description: "Explore InfinityX smart classroom deployments, campus networking, enterprise IT infrastructure, and surveillance integration services for schools and organizations.",
+        keywords: "smart classroom setup India, campus networking solutions, enterprise IT integration, CCTV surveillance integration, education technology services",
+        path: "/services",
+        image: "/images/SmartClass.png"
     });
     return (
         <div className="bg-background min-h-screen text-foreground selection:bg-[#FF9F1B]/20 pt-0">
+
+            <section className="border-b border-bento/50 px-6 pb-12 pt-28 md:pb-16 md:pt-32">
+                <div className="mx-auto max-w-7xl">
+                    <span className="mb-4 block text-xs font-bold uppercase tracking-[0.2em] text-[#FF9F1B] md:text-sm">InfinityX Services</span>
+                    <h1 className="max-w-4xl text-4xl font-display font-bold tracking-tight text-foreground md:text-6xl lg:text-7xl">
+                        Smart classroom, networking, and surveillance deployments under one integration partner.
+                    </h1>
+                    <p className="mt-6 max-w-3xl text-base font-medium leading-relaxed text-foreground/60 md:text-xl">
+                        InfinityX supports institutions and enterprise teams with end-to-end planning, product selection, rollout, and ongoing operational support across display systems and campus infrastructure.
+                    </p>
+                    <div className="mt-8 flex flex-col gap-4 sm:flex-row">
+                        <Link
+                            to="/contact"
+                            className="inline-flex items-center justify-center gap-2 rounded-full bg-[#FF9F1B] px-8 py-4 text-base font-bold text-white shadow-xl shadow-[#FF9F1B]/20 transition-all hover:scale-105 hover:bg-[#FF9F1B]/90 active:scale-95"
+                        >
+                            Request a Consultation <ArrowRight size={18} />
+                        </Link>
+                        <Link
+                            to="/products"
+                            className="inline-flex items-center justify-center gap-2 rounded-full border border-foreground/15 px-8 py-4 text-base font-bold text-foreground transition-all hover:border-[#FF9F1B] hover:text-[#FF9F1B]"
+                        >
+                            Explore Products <ChevronRight size={18} />
+                        </Link>
+                    </div>
+                </div>
+            </section>
 
             {/* Section 1: SmartClass */}
             <ServiceSection

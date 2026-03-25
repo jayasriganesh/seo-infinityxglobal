@@ -10,7 +10,9 @@ const ClientsPage = () => {
     useSEO({
         title: "Our Trusted Clients & Partners | InfinityX",
         description: "Join over 2000 happy customers, including top schools and government projects across India, who trust InfinityX for their interactive display and IT infrastructure needs.",
-        keywords: "InfinityX Clients, Education Partners, Government Projects, Matrix Edge Customers"
+        keywords: "InfinityX Clients, Education Partners, Government Projects, Matrix Edge Customers",
+        path: "/clients",
+        image: "/images/INFINITYX.png"
     });
     const containerRef = useRef(null);
 

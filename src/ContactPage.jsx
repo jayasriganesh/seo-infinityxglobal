@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import emailjs from '@emailjs/browser';
 import { useSEO } from './hooks/useSEO';
+import { Link } from 'react-router-dom';
 import { gsap } from 'gsap';
 import { MapPin, Phone, Mail, ChevronRight } from 'lucide-react';
 
@@ -8,7 +9,46 @@ const ContactPage = () => {
     useSEO({
         title: "Contact Sales & Support | InfinityX",
         description: "Get in touch with our enterprise team to construct bespoke IT and interactive display solutions for your organization. Dedicated support and sales contact.",
-        keywords: "Contact InfinityX, Matrix Edge Contact, IT Infrastructure Sales, Interactive Display Quote"
+        keywords: "Contact InfinityX, Matrix Edge Contact, IT Infrastructure Sales, Interactive Display Quote",
+        path: "/contact",
+        image: "/images/contact-sales.png",
+        structuredData: [
+            {
+                "@context": "https://schema.org",
+                "@type": "LocalBusiness",
+                name: "InfinityX",
+                url: "https://www.infinityxglobal.com/contact",
+                image: "https://www.infinityxglobal.com/images/contact-sales.png",
+                telephone: "+91 9292252880",
+                email: "contact@infinityxglobal.com",
+                address: {
+                    "@type": "PostalAddress",
+                    streetAddress: "APIIC Industrial area C4/110, 100 Feet Rd",
+                    addressLocality: "Vijayawada",
+                    addressRegion: "Andhra Pradesh",
+                    postalCode: "520007",
+                    addressCountry: "IN"
+                }
+            },
+            {
+                "@context": "https://schema.org",
+                "@type": "BreadcrumbList",
+                itemListElement: [
+                    {
+                        "@type": "ListItem",
+                        position: 1,
+                        name: "Home",
+                        item: "https://www.infinityxglobal.com/"
+                    },
+                    {
+                        "@type": "ListItem",
+                        position: 2,
+                        name: "Contact",
+                        item: "https://www.infinityxglobal.com/contact"
+                    }
+                ]
+            }
+        ]
     });
     const [status, setStatus] = useState('');
     const [inquiryType, setInquiryType] = useState('Interactive Displays');
@@ -135,9 +175,9 @@ const ContactPage = () => {
                             <p className="text-foreground/60 text-sm font-medium leading-relaxed mb-4">
                                 Existing customers can directly access our dedicated technical support portal for rapid resolution.
                             </p>
-                            <a href="#" className="text-[#FF9F1B] font-bold text-sm inline-flex items-center gap-1 hover:gap-2 transition-all">
+                            <Link to="/support" className="text-[#FF9F1B] font-bold text-sm inline-flex items-center gap-1 hover:gap-2 transition-all">
                                 Go to Support Portal <ChevronRight size={16} />
-                            </a>
+                            </Link>
                         </div>
                     </div>
 
